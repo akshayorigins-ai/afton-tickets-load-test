@@ -1,0 +1,46 @@
+{
+  "name": "afton-tickets-load-test",
+  "version": "1.0.0",
+  "description": "Complete load testing suite for Afton Tickets with Grafana & InfluxDB",
+  "scripts": {
+    "setup": "chmod +x setup.sh && ./setup.sh",
+    "infrastructure:up": "docker-compose up -d",
+    "infrastructure:down": "docker-compose down",
+    "infrastructure:logs": "docker-compose logs -f",
+    "infrastructure:restart": "docker-compose restart",
+    
+    "test:all": "chmod +x run-all-tests.sh && ./run-all-tests.sh",
+    "test:quick": "docker-compose run --rm k6 run /scripts/homepage.js --out influxdb=http://admin:admin123@influxdb:8086/k6",
+    
+    "test:homepage:ultralight": "docker-compose run --rm -e TEST_PROFILE=ultralight k6 run /scripts/homepage.js --out influxdb=http://admin:admin123@influxdb:8086/k6",
+    "test:events:ultralight": "docker-compose run --rm -e TEST_PROFILE=ultralight k6 run /scripts/events.js --out influxdb=http://admin:admin123@influxdb:8086/k6",
+    "test:search:ultralight": "docker-compose run --rm -e TEST_PROFILE=ultralight k6 run /scripts/search.js --out influxdb=http://admin:admin123@influxdb:8086/k6",
+    "test:event-details:ultralight": "docker-compose run --rm -e TEST_PROFILE=ultralight k6 run /scripts/event-details.js --out influxdb=http://admin:admin123@influxdb:8086/k6",
+    "test:ticket-options:ultralight": "docker-compose run --rm -e TEST_PROFILE=ultralight k6 run /scripts/ticket-options.js --out influxdb=http://admin:admin123@influxdb:8086/k6",
+    "test:checkout:ultralight": "docker-compose run --rm -e TEST_PROFILE=ultralight k6 run /scripts/checkout.js --out influxdb=http://admin:admin123@influxdb:8086/k6",
+
+    "test:homepage:light": "docker-compose run --rm -e TEST_PROFILE=light k6 run /scripts/homepage.js --out influxdb=http://admin:admin123@influxdb:8086/k6",
+    "test:events:light": "docker-compose run --rm -e TEST_PROFILE=light k6 run /scripts/events.js --out influxdb=http://admin:admin123@influxdb:8086/k6",
+    "test:search:light": "docker-compose run --rm -e TEST_PROFILE=light k6 run /scripts/search.js --out influxdb=http://admin:admin123@influxdb:8086/k6",
+    "test:event-details:light": "docker-compose run --rm -e TEST_PROFILE=light k6 run /scripts/event-details.js --out influxdb=http://admin:admin123@influxdb:8086/k6",
+    "test:ticket-options:light": "docker-compose run --rm -e TEST_PROFILE=light k6 run /scripts/ticket-options.js --out influxdb=http://admin:admin123@influxdb:8086/k6",
+    "test:checkout:light": "docker-compose run --rm -e TEST_PROFILE=light k6 run /scripts/checkout.js --out influxdb=http://admin:admin123@influxdb:8086/k6",
+
+    "test:homepage:medium": "docker-compose run --rm -e TEST_PROFILE=medium k6 run /scripts/homepage.js --out influxdb=http://admin:admin123@influxdb:8086/k6",
+    "test:events:medium": "docker-compose run --rm -e TEST_PROFILE=medium k6 run /scripts/events.js --out influxdb=http://admin:admin123@influxdb:8086/k6",
+    "test:search:medium": "docker-compose run --rm -e TEST_PROFILE=medium k6 run /scripts/search.js --out influxdb=http://admin:admin123@influxdb:8086/k6",
+    "test:event-details:medium": "docker-compose run --rm -e TEST_PROFILE=medium k6 run /scripts/event-details.js --out influxdb=http://admin:admin123@influxdb:8086/k6",
+    "test:ticket-options:medium": "docker-compose run --rm -e TEST_PROFILE=medium k6 run /scripts/ticket-options.js --out influxdb=http://admin:admin123@influxdb:8086/k6",
+    "test:checkout:medium": "docker-compose run --rm -e TEST_PROFILE=medium k6 run /scripts/checkout.js --out influxdb=http://admin:admin123@influxdb:8086/k6",
+
+    "test:homepage:heavy": "docker-compose run --rm -e TEST_PROFILE=heavy k6 run /scripts/homepage.js --out influxdb=http://admin:admin123@influxdb:8086/k6",
+    "test:events:heavy": "docker-compose run --rm -e TEST_PROFILE=heavy k6 run /scripts/events.js --out influxdb=http://admin:admin123@influxdb:8086/k6",
+    "test:search:heavy": "docker-compose run --rm -e TEST_PROFILE=heavy k6 run /scripts/search.js --out influxdb=http://admin:admin123@influxdb:8086/k6",
+    "test:event-details:heavy": "docker-compose run --rm -e TEST_PROFILE=heavy k6 run /scripts/event-details.js --out influxdb=http://admin:admin123@influxdb:8086/k6",
+    "test:ticket-options:heavy": "docker-compose run --rm -e TEST_PROFILE=heavy k6 run /scripts/ticket-options.js --out influxdb=http://admin:admin123@influxdb:8086/k6",
+    "test:checkout:heavy": "docker-compose run --rm -e TEST_PROFILE=heavy k6 run /scripts/checkout.js --out influxdb=http://admin:admin123@influxdb:8086/k6",
+
+    "dashboard:open": "echo '📊 Grafana Dashboard: http://localhost:3000' && echo '👤 Username: admin' && echo '🔑 Password: admin123'",
+    "clean": "docker-compose down -v && rm -rf results/*"
+  }
+}

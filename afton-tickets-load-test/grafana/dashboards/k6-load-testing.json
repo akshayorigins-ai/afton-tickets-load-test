@@ -1,0 +1,195 @@
+{
+  "dashboard": {
+    "id": null,
+    "title": "K6 Load Testing Dashboard - Afton Tickets",
+    "tags": ["k6", "load-testing"],
+    "timezone": "browser",
+    "panels": [
+      {
+        "id": 1,
+        "title": "Virtual Users",
+        "type": "stat",
+        "gridPos": {"h": 8, "w": 6, "x": 0, "y": 0},
+        "targets": [
+          {
+            "query": "SELECT mean(\"vus\") FROM \"k6\" WHERE $timeFilter GROUP BY time(1s) fill(null)",
+            "rawQuery": true
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {"mode": "palette-classic"},
+            "unit": "short",
+            "decimals": 0
+          }
+        }
+      },
+      {
+        "id": 2,
+        "title": "Requests per Second",
+        "type": "stat",
+        "gridPos": {"h": 8, "w": 6, "x": 6, "y": 0},
+        "targets": [
+          {
+            "query": "SELECT mean(\"http_reqs\") FROM \"k6\" WHERE $timeFilter GROUP BY time(1s) fill(null)",
+            "rawQuery": true
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {"mode": "palette-classic"},
+            "unit": "reqps",
+            "decimals": 2
+          }
+        }
+      },
+      {
+        "id": 3,
+        "title": "Error Rate",
+        "type": "stat",
+        "gridPos": {"h": 8, "w": 6, "x": 12, "y": 0},
+        "targets": [
+          {
+            "query": "SELECT mean(\"http_req_failed\") FROM \"k6\" WHERE $timeFilter GROUP BY time(1s) fill(null)",
+            "rawQuery": true
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {"mode": "thresholds"},
+            "unit": "percent",
+            "decimals": 2,
+            "thresholds": {
+              "steps": [
+                {"color": "green", "value": null},
+                {"color": "red", "value": 0.01}
+              ]
+            }
+          }
+        }
+      },
+      {
+        "id": 4,
+        "title": "Response Times (p95)",
+        "type": "stat",
+        "gridPos": {"h": 8, "w": 6, "x": 18, "y": 0},
+        "targets": [
+          {
+            "query": "SELECT mean(\"http_req_duration\") FROM \"k6\" WHERE $timeFilter GROUP BY time(1s) fill(null)",
+            "rawQuery": true
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {"mode": "palette-classic"},
+            "unit": "ms",
+            "decimals": 0
+          }
+        }
+      },
+      {
+        "id": 5,
+        "title": "Virtual Users Over Time",
+        "type": "timeseries",
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 8},
+        "targets": [
+          {
+            "query": "SELECT mean(\"vus\") FROM \"k6\" WHERE $timeFilter GROUP BY time(1s) fill(null)",
+            "rawQuery": true
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {"mode": "palette-classic"},
+            "unit": "short",
+            "decimals": 0
+          }
+        }
+      },
+      {
+        "id": 6,
+        "title": "Response Times Over Time",
+        "type": "timeseries",
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 8},
+        "targets": [
+          {
+            "query": "SELECT mean(\"http_req_duration\") FROM \"k6\" WHERE $timeFilter GROUP BY time(1s) fill(null)",
+            "rawQuery": true
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {"mode": "palette-classic"},
+            "unit": "ms",
+            "decimals": 0
+          }
+        }
+      },
+      {
+        "id": 7,
+        "title": "Requests per Second Over Time",
+        "type": "timeseries",
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 16},
+        "targets": [
+          {
+            "query": "SELECT mean(\"http_reqs\") FROM \"k6\" WHERE $timeFilter GROUP BY time(1s) fill(null)",
+            "rawQuery": true
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {"mode": "palette-classic"},
+            "unit": "reqps",
+            "decimals": 2
+          }
+        }
+      },
+      {
+        "id": 8,
+        "title": "Error Rate Over Time",
+        "type": "timeseries",
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 16},
+        "targets": [
+          {
+            "query": "SELECT mean(\"http_req_failed\") FROM \"k6\" WHERE $timeFilter GROUP BY time(1s) fill(null)",
+            "rawQuery": true
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {"mode": "thresholds"},
+            "unit": "percent",
+            "decimals": 2,
+            "thresholds": {
+              "steps": [
+                {"color": "green", "value": null},
+                {"color": "red", "value": 0.01}
+              ]
+            }
+          }
+        }
+      },
+      {
+        "id": 9,
+        "title": "Test Summary by Component",
+        "type": "table",
+        "gridPos": {"h": 10, "w": 24, "x": 0, "y": 24},
+        "targets": [
+          {
+            "query": "SELECT mean(\"http_req_duration\") as \"Avg Response Time\", mean(\"http_reqs\") as \"Requests/s\", mean(\"http_req_failed\") as \"Error Rate\", last(\"vus_max\") as \"Max VUs\" FROM \"k6\" WHERE $timeFilter GROUP BY \"component\"",
+            "rawQuery": true
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {"mode": "palette-classic"},
+            "unit": "ms",
+            "decimals": 2
+          }
+        }
+      }
+    ],
+    "time": {"from": "now-1h", "to": "now"},
+    "refresh": "5s"
+  }
+}
