@@ -1,0 +1,17 @@
+image:
+  file: .gitpod.Dockerfile
+
+tasks:
+  - init: |
+      chmod +x setup.sh run-all-tests.sh
+      ./setup.sh
+    command: |
+      echo "🚀 Afton Tickets Load Testing Ready!"
+      echo "📊 Grafana: https://3000-${GITPOD_WORKSPACE_URL#https://}"
+      echo "🔧 Run: ./run-all-tests.sh"
+
+ports:
+  - port: 3000
+    onOpen: open-preview
+  - port: 8086
+    onOpen: ignore
